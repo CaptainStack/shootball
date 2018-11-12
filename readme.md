@@ -1,6 +1,9 @@
 # Shootball
 Shootball is a game developed during the [2018 GitHub Game Off](https://blog.github.com/2018-11-01-game-off-2018-theme-announcement/)
 
+Here is a Google Drive folder for our brainstorming and design documents:
+https://drive.google.com/drive/folders/1DVbgP0zJuZDnT_E6vsXGKhwUG_3zN5dC
+
 # Developers (add your name below as your first commit)
 * Andre Stackhouse
 * Kelsey Breseman
