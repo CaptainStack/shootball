@@ -5,7 +5,7 @@ Shootball is a game developed during the [2018 GitHub Game Off](https://blog.git
 * Andre Stackhouse
 * Kelsey Breseman
 * Christopher Proteau
-* (soon) Brett SLOWland
+* Brett SLOWland
 
 # Developer setup
 * [Download Unity](https://store.unity.com/) ("Personal" use is free)
