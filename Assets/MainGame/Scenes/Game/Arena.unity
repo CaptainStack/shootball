@@ -30046,6 +30046,44 @@ Sprite:
   m_PhysicsShape: []
   m_Bones: []
   m_SpriteID: 
+--- !u!1 &1119424688 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1174037730657468, guid: 15f3bd8837e141443ac99f935eea3d6d,
+    type: 2}
+  m_PrefabInternal: {fileID: 178005017}
+--- !u!114 &1119424692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1119424688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e8f4173c9ce72a429ec713bacda4d74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HP: 3
+  Dmg: 1
+  ElapseTrapTimer: 0
+  ElapseTrapON: 0
+  ElapseTrapOFF: 0
+  vItemList: 
+  vDebrisList:
+  - {fileID: 1870837845267444, guid: 404964bedc51c1841805ff4feb2f4e57, type: 2}
+  vTileType: 1
+  vLinkedObject: {fileID: 0}
+  DoorStatus: 0
+  ShowParticles: 0
+  LayerOrder: 15
+  vAnimationList: []
+  AnimationSpeed: 0.05
+  color: {r: 1, g: 1, b: 1, a: 1}
+  objParticle: {fileID: 0}
+  DoorIsMoving: 0
+  vRenderer: {fileID: 0}
+  CanBeSeen: 0
+  IsReady: 0
+  TrapIsActivated: 0
 --- !u!1 &1122977964
 GameObject:
   m_ObjectHideFlags: 0
