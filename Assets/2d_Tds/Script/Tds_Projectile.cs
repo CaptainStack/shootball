@@ -50,7 +50,7 @@ public class Tds_Projectile : MonoBehaviour {
 			vGameManager.vProjectileList.Remove (this);
 
 		//destroy itself
-		GameObject.Destroy (this.gameObject);
+		GameObject.Destroy(this.gameObject);
 	}
 
 	void CalculateRebounce(Collider2D other)
@@ -60,7 +60,7 @@ public class Tds_Projectile : MonoBehaviour {
 		vRebounce--;
 
 		//wait a little bit before re-enabling the collider
-		StartCoroutine (WaitForTime (0.1f));
+		StartCoroutine(WaitForTime (0.1f));
 	}
 
 	IEnumerator WaitForTime(float Sec)
@@ -75,17 +75,23 @@ public class Tds_Projectile : MonoBehaviour {
 		transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle-90f));
 	}
 
-	void OnTriggerEnter2D(Collider2D other)
+	IEnumerator OnTriggerEnter2D(Collider2D other)
 	{
-		Tds_Tile vTile = other.GetComponent<Tds_Tile> ();
-		if (vTile != null) {
-			if (vTile.vTileType == Tds_Tile.cTileType.Destructible)
-				vTile.TileDie ();
-
-			if (vTile.vTileType == Tds_Tile.cTileType.Wall && vRebounce <= 0)
-				ProjDie ();
-			else if(vTile.vTileType == Tds_Tile.cTileType.Wall)
+		Tds_Tile vTile = other.GetComponent<Tds_Tile>();
+		if (vTile != null || other.tag == "Ball") {
+			if (vTile != null && vTile.vTileType == Tds_Tile.cTileType.Destructible) {
+				vTile.TileDie();
+			}
+			if (((vTile != null && vTile.vTileType == Tds_Tile.cTileType.Wall) || other.tag == "Ball") && vRebounce <= 0) {
+				this.vCollider.isTrigger = false;
+				yield return new WaitForSeconds(0.001f);
+				ProjDie();
+			}
+			else if((vTile != null && vTile.vTileType == Tds_Tile.cTileType.Wall) || other.tag == "Ball") {
+				this.vCollider.isTrigger = false;
+				yield return new WaitForSeconds(0.001f);
 				CalculateRebounce(other);
+			}
 		}
 		else if (other.tag == "Character") {
 			Tds_Character vChar = other.GetComponent<Tds_Character> ();
@@ -93,7 +99,7 @@ public class Tds_Projectile : MonoBehaviour {
 			//make sure the projectile is for the other faction and the target is alive.  
 			if (vChar.vFactionType != vProjFactionType && vChar.IsAlive) {
 				vChar.ApplyDamage (vDmg);
-				ProjDie ();
+				ProjDie();
 			}
 		}
 	}
