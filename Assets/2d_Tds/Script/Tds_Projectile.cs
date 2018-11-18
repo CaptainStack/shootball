@@ -92,6 +92,10 @@ public class Tds_Projectile : MonoBehaviour {
 				yield return new WaitForSeconds(0.001f);
 				CalculateRebounce(other);
 			}
+			if (other.tag == "Ball") {
+				vGameManager.vMainPlayer.Score += 1;
+				vGameManager.ScoreText.text = vGameManager.vMainPlayer.Score.ToString();
+			}
 		}
 		else if (other.tag == "Character") {
 			Tds_Character vChar = other.GetComponent<Tds_Character> ();

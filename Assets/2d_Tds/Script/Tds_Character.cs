@@ -13,6 +13,7 @@ public class Tds_Character : MonoBehaviour {
 	public string vName = "";
 	public FactionType vFactionType = FactionType.Hostile;
 	public int HP = 5;
+	public int Score = 0;
 	public bool IsAlive = true;
 	public bool IsPlayer = false;
 	public bool IsCharacter = false;

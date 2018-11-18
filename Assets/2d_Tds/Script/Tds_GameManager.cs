@@ -57,6 +57,7 @@ public class Tds_GameManager : MonoBehaviour {
 
 	public Image vHpImage;
 	public Text vPlayerText;
+	public Text ScoreText;
 
 	// Use this for initialization
 	void Start () {
