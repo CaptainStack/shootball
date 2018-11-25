@@ -31,7 +31,11 @@ public class ScoreGoal : MonoBehaviour {
                 vGameManager.vPlayer2.Score += 1;
                 vGameManager.ScoreTextP2.text = vGameManager.vPlayer2.Score.ToString();
             }
+
             other.GetComponent<BallScript>().ResetPosition();
+            vGameManager.vMainPlayer.ResetPosition();
+            vGameManager.vPlayer2.ResetPosition();
+
             if (vGameManager.vMainPlayer.Score >= 3) {
 				Cursor.visible = true;
 				SceneManager.LoadScene ("Main");

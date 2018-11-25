@@ -5,6 +5,7 @@ using UnityEngine;
 public class BallScript : MonoBehaviour {
 
     private Vector3 startPos;
+
 	// Use this for initialization
 	void Start () {
         startPos = this.transform.position;
