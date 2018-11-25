@@ -35,8 +35,6 @@ public class Tds_Character : MonoBehaviour {
 
 	//initialize character direction
 	private WalkDirection CurWalkDirection = WalkDirection.Down;
-	private Quaternion CamStartRotation;
-	private GameObject vCamObj;
 	public List<Tds_Weapons> ListWeapons;
 	private GameObject CurWeaponObj = null;
 	private int vCurWeapIndex = 0;				//start with the 1st weapon
@@ -70,9 +68,7 @@ public class Tds_Character : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		LastMouseLocation = Input.mousePosition;
-		CamStartRotation = Camera.main.transform.rotation;
 		vAudioSource = GetComponent<AudioSource> ();
-		vCamObj = Camera.main.gameObject;
 
 		vMainPlayer = GameObject.Find ("Player");
 
@@ -476,7 +472,6 @@ public class Tds_Character : MonoBehaviour {
 				if (rotationChanged && CanRotateBody()) {
 					vBodyObj.transform.rotation = Quaternion.Slerp (vBodyObj.transform.rotation, newRotation, 1f);
 				}
-				vCamObj.transform.rotation = CamStartRotation;
 			}
 		}
 	}
