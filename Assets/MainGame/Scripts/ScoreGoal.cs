@@ -23,7 +23,7 @@ public class ScoreGoal : MonoBehaviour {
 			vGameManager.ScoreText.text = vGameManager.vMainPlayer.Score.ToString();
 			if (vGameManager.vMainPlayer.Score >= 3) {
 				Cursor.visible = true;
-				SceneManager.LoadScene ("Main");
+				SceneManager.LoadScene ("DialogueTest");
 			}
 		}
 	}
