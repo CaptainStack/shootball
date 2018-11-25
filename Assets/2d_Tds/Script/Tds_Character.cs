@@ -122,7 +122,9 @@ public class Tds_Character : MonoBehaviour {
 				if (IsPlayer || IsPlayer2) {
 
 					//player get mouse position instead of its' own position
-					vTargetPosition = Input.mousePosition;
+					if (IsPlayer) {
+						vTargetPosition = Input.mousePosition;
+					}
 
 					//calculate how far is the cursor from the player
 					Vector3 v3Pos = new Vector3(0f, 0f, 0f);
@@ -147,7 +149,7 @@ public class Tds_Character : MonoBehaviour {
 					
 					if (vAimIcon != null && vCurrentIcon == null) {
 						vCurrentIcon = Instantiate (vAimIcon);
-					} else if (vCurrentIcon != null) {
+					} else if (IsPlayer && vCurrentIcon != null) {
 						Vector3 pz = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 						pz.z = 0;
 						pz.x -= 0.1f;
@@ -380,7 +382,7 @@ public class Tds_Character : MonoBehaviour {
 					UsingGamepad = true;
 					rotationChanged = true;
 					LastPositiveGamepadInput = joyInput;
-				} else if (LastMouseLocation != Input.mousePosition /* Snaps rotation to movement */) {
+				} else if (IsPlayer && (LastMouseLocation != Input.mousePosition)) {
 					dir = vTargetPosition - pos;
 					LastMouseLocation = Input.mousePosition;
 					rotationChanged = true;
@@ -390,7 +392,9 @@ public class Tds_Character : MonoBehaviour {
 					if (UsingGamepad) {
 						dir = LastPositiveGamepadInput;
 					} else {
-						dir = vTargetPosition - pos;
+						if (IsPlayer) {
+							dir = vTargetPosition - pos;
+						}
 					}
 				}
 				
