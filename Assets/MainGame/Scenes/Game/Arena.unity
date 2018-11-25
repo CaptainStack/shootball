@@ -1443,15 +1443,15 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 32368735}
-  m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -600.55, y: -742.81, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: -0.70710677}
+  m_LocalPosition: {x: -584.78, y: -732.72, z: 0}
   m_LocalScale: {x: 12.000008, y: 12.000008, z: 4}
   m_Children:
   - {fileID: 2050887232}
   - {fileID: 882504572}
   m_Father: {fileID: 474373200}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -270}
 --- !u!212 &32368737
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -14609,7 +14609,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -590.82, y: -737.16}
+  m_AnchoredPosition: {x: -597.12, y: -733.06}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!213 &485795487
@@ -30733,6 +30733,7 @@ GameObject:
   - component: {fileID: 1119424690}
   - component: {fileID: 1119424689}
   - component: {fileID: 1119424692}
+  - component: {fileID: 1119424694}
   m_Layer: 5
   m_Name: Ball
   m_TagString: Ball
@@ -30869,6 +30870,17 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!114 &1119424694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1119424688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d15606346877b494eb9c83b342704fe8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1122977964
 GameObject:
   m_ObjectHideFlags: 0
@@ -35943,6 +35955,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vGameManager: {fileID: 1810420517}
   playerNumber: 1
+  player1: {fileID: 0}
+  player2: {fileID: 0}
+  ball: {fileID: 0}
 --- !u!213 &1263626172
 Sprite:
   m_ObjectHideFlags: 0
@@ -39407,6 +39422,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vGameManager: {fileID: 1810420517}
   playerNumber: 2
+  player1: {fileID: 0}
+  player2: {fileID: 0}
+  ball: {fileID: 0}
 --- !u!213 &1397238047
 Sprite:
   m_ObjectHideFlags: 0
@@ -46257,7 +46275,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1549789786}
   m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -600.55, y: -733.1, z: 0}
+  m_LocalPosition: {x: -609.07, y: -733.1, z: 0}
   m_LocalScale: {x: 12, y: 12, z: 4}
   m_Children:
   - {fileID: 271006938}
