@@ -63,8 +63,13 @@ public class Tds_Character : MonoBehaviour {
 
 	private bool GameStarted = false;
 
+	private Vector3 LastMouseLocation;
+	private bool UsingGamepad = false;
+	private Vector3 LastPositiveGamepadInput;
+
 	// Use this for initialization
 	void Start () {
+		LastMouseLocation = Input.mousePosition;
 		CamStartRotation = Camera.main.transform.rotation;
 		vAudioSource = GetComponent<AudioSource> ();
 		vCamObj = Camera.main.gameObject;
@@ -84,7 +89,6 @@ public class Tds_Character : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
 		//check if the character is ready
 		if (vGameManager != null && IsAlive) {
 
@@ -115,7 +119,7 @@ public class Tds_Character : MonoBehaviour {
 					vTargetPosition = Input.mousePosition;
 
 					//calculate how far is the cursor from the player
-					Vector3 v3Pos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f);
+					Vector3 v3Pos = new Vector3(0f, 0f, 0f);
 					v3Pos = Camera.main.ScreenToWorldPoint(v3Pos);
 
 					//prevent the player to rotate on itself when the cursor is above him
@@ -145,15 +149,16 @@ public class Tds_Character : MonoBehaviour {
 						vCurrentIcon.transform.position = pz;
 					}
 
-					if (Input.GetMouseButton (0)) {
+					if (Input.GetButton("Fire1")) {
 						IsAttacking = true;
 					}
 
 					//check if the user want to change weapon
-					if (Input.GetAxis ("Mouse ScrollWheel") > 0) {
+					if (Input.GetButtonDown ("ChangeWeapon")) {
 						GetNextWeapon (1);
-					} else if (Input.GetAxis ("Mouse ScrollWheel") < 0)
+					} else if (Input.GetButtonDown ("ChangeWeapon")) {
 						GetNextWeapon (-1);
+					}
 
 					//reduce it's time
 					if (IsReloading && TimeToReload > 0f) {
@@ -162,7 +167,7 @@ public class Tds_Character : MonoBehaviour {
 					}
 
 					//get the item
-					if (LootNearby && Input.GetKeyDown ("space") && vCurLoot != null) {
+					if (LootNearby && (Input.GetKeyDown ("space") || Input.GetButtonDown ("Submit")) && vCurLoot != null) {
 
 						//check if we already have the weapon and show it
 						bool HasAlreadyWeapon = false;
@@ -357,12 +362,32 @@ public class Tds_Character : MonoBehaviour {
 
 				//calcualte the angle
 				Vector3 pos = Camera.main.WorldToScreenPoint (vBodyPosition);
-				Vector3 dir = vTargetPosition - pos;
+				Vector3 joyInput = new Vector3(Input.GetAxis("TurnX"), Input.GetAxis("TurnY"), 0f);
 
-				Quaternion newRotation = Quaternion.LookRotation (dir, Vector3.back);
-				newRotation.x = 0f;
-				newRotation.y = 0f;
+				Vector3 dir = new Vector3(); 
+				bool rotationChanged = false;
 
+				if (joyInput.magnitude != 0f) {
+					dir = joyInput;
+					UsingGamepad = true;
+					rotationChanged = true;
+					LastPositiveGamepadInput = joyInput;
+					Debug.Log("Gamepad!");
+				} else if (LastMouseLocation != Input.mousePosition /* Snaps rotation to movement */) {
+					dir = vTargetPosition - pos;
+					LastMouseLocation = Input.mousePosition;
+					rotationChanged = true;
+					Debug.Log("Mouse!");
+					UsingGamepad = false;
+				} else {
+					rotationChanged = true;
+					if (UsingGamepad) {
+						dir = LastPositiveGamepadInput;
+					} else {
+						dir = vTargetPosition - pos;
+					}
+				}
+				
 				//check if walking
 				if (IsWalking) {
 
@@ -440,12 +465,20 @@ public class Tds_Character : MonoBehaviour {
 						transform.Translate (vDestination);
 				}
 			
+				Quaternion newRotation = new Quaternion();
+
+				if (rotationChanged) {
+					newRotation = Quaternion.LookRotation (dir, Vector3.back);
+					newRotation.x = 0f;
+					newRotation.y = 0f;
+				}
+
 				//rotate the body correctly
 				//can only look at the player if he can see it
-				if (CanRotateBody())
+				if (rotationChanged && CanRotateBody()) {
 					vBodyObj.transform.rotation = Quaternion.Slerp (vBodyObj.transform.rotation, newRotation, 1f);
-
-				vCamObj.transform.rotation = CamStartRotation;	
+				}
+				vCamObj.transform.rotation = CamStartRotation;
 			}
 		}
 	}
