@@ -40,6 +40,8 @@ public class Tds_GameManager : MonoBehaviour {
 	public GameObject vDyingAnim = null;				//if exist, instantiate this new object will make the character dying
 
 	public Tds_Character vMainPlayer = null;
+	public Tds_Character vPlayer2 = null;
+
 	public GameObject vWorldObj = null;					//put everything in this gameobject 
 	public GameObject vCanvasUI = null;
 	public bool IsReady = false;						//start every player/enemy at the same time
@@ -99,6 +101,9 @@ public class Tds_GameManager : MonoBehaviour {
 				//get the main player
 				if (vChar.IsPlayer)
 					vMainPlayer = vChar;
+
+				if (vChar.IsPlayer2)
+					vPlayer2 = vChar;
 
 				//initialise the character
 				vChar.InitialiseChar (this);

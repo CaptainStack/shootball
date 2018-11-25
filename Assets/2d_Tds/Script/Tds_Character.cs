@@ -16,6 +16,7 @@ public class Tds_Character : MonoBehaviour {
 	public int Score = 0;
 	public bool IsAlive = true;
 	public bool IsPlayer = false;
+	public bool IsPlayer2 = false;
 	public bool IsCharacter = false;
 	public List<WeaponName> ListWeaponsName;				//choose which weapon will be instantied for this player
 	public float WalkSpeed = 1f;
@@ -28,6 +29,15 @@ public class Tds_Character : MonoBehaviour {
 	private bool LootNearby = false;
 	public AudioClip ReloadAudio;
 
+	// Control Mapping
+	public string Fire;
+	public string ChangeWeaponKey;
+	public string UseKey;
+	public string MovementX;
+	public string MovementY;
+	public string CameraX;
+	public string CameraY;
+
 	private bool IsWalking = false;
 	private bool LastWalkingStatus = false;
 	private bool IsChasing = false;							//check if we are running at the player
@@ -35,8 +45,6 @@ public class Tds_Character : MonoBehaviour {
 
 	//initialize character direction
 	private WalkDirection CurWalkDirection = WalkDirection.Down;
-	private Quaternion CamStartRotation;
-	private GameObject vCamObj;
 	public List<Tds_Weapons> ListWeapons;
 	private GameObject CurWeaponObj = null;
 	private int vCurWeapIndex = 0;				//start with the 1st weapon
@@ -70,17 +78,15 @@ public class Tds_Character : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		LastMouseLocation = Input.mousePosition;
-		CamStartRotation = Camera.main.transform.rotation;
 		vAudioSource = GetComponent<AudioSource> ();
-		vCamObj = Camera.main.gameObject;
 
-		vMainPlayer = GameObject.Find ("Player");
+		vMainPlayer = GameObject.Find (vName);
 
 		//initialise variables
 		IsWalking = false;
 		LastWalkingStatus = false;
 
-		if (IsPlayer)
+		if (IsPlayer || IsPlayer2)
 			SeePlayer = true;
 
 		//get the MaxHP
@@ -113,7 +119,7 @@ public class Tds_Character : MonoBehaviour {
 						CanAttack = true;
 				}
 
-				if (IsPlayer) {
+				if (IsPlayer || IsPlayer2) {
 
 					//player get mouse position instead of its' own position
 					vTargetPosition = Input.mousePosition;
@@ -128,7 +134,7 @@ public class Tds_Character : MonoBehaviour {
 					else
 						CursorIsNear = false;
 
-					if (Input.GetAxis ("Vertical") > 0 || Input.GetAxis ("Vertical") < 0 || Input.GetAxis ("Horizontal") > 0 || Input.GetAxis ("Horizontal") < 0)
+					if (Input.GetAxis (MovementY) > 0 || Input.GetAxis (MovementY) < 0 || Input.GetAxis (MovementX) > 0 || Input.GetAxis (MovementX) < 0)
 						IsWalking = true;
 					else
 						IsWalking = false;
@@ -149,14 +155,15 @@ public class Tds_Character : MonoBehaviour {
 						vCurrentIcon.transform.position = pz;
 					}
 
-					if (Input.GetButton("Fire1")) {
+					if (Input.GetButton(Fire)) {
+						Debug.Log(Fire);
 						IsAttacking = true;
 					}
 
 					//check if the user want to change weapon
-					if (Input.GetButtonDown ("ChangeWeapon")) {
+					if (Input.GetButtonDown (ChangeWeaponKey)) {
 						GetNextWeapon (1);
-					} else if (Input.GetButtonDown ("ChangeWeapon")) {
+					} else if (Input.GetButtonDown (ChangeWeaponKey)) {
 						GetNextWeapon (-1);
 					}
 
@@ -167,7 +174,8 @@ public class Tds_Character : MonoBehaviour {
 					}
 
 					//get the item
-					if (LootNearby && (Input.GetKeyDown ("space") || Input.GetButtonDown ("Submit")) && vCurLoot != null) {
+					if (LootNearby && (Input.GetButtonDown (UseKey)) && vCurLoot != null) {
+						Debug.Log(UseKey);
 
 						//check if we already have the weapon and show it
 						bool HasAlreadyWeapon = false;
@@ -362,7 +370,7 @@ public class Tds_Character : MonoBehaviour {
 
 				//calcualte the angle
 				Vector3 pos = Camera.main.WorldToScreenPoint (vBodyPosition);
-				Vector3 joyInput = new Vector3(Input.GetAxis("TurnX"), Input.GetAxis("TurnY"), 0f);
+				Vector3 joyInput = new Vector3(Input.GetAxis(CameraX), Input.GetAxis(CameraY), 0f);
 
 				Vector3 dir = new Vector3(); 
 				bool rotationChanged = false;
@@ -395,14 +403,14 @@ public class Tds_Character : MonoBehaviour {
 					bool vMoveLeft = false;
 					bool vMoveDown = false;
 
-					if (IsPlayer) {
-						if (Input.GetAxis ("Vertical") > 0 && !Input.GetButtonUp ("Vertical"))
+					if (IsPlayer || IsPlayer2) {
+						if (Input.GetAxis (MovementY) > 0 && !Input.GetButtonUp (MovementY))
 							vMoveUP = true;
-						if (Input.GetAxis ("Vertical") < 0 && !Input.GetButtonUp ("Vertical"))
+						if (Input.GetAxis (MovementY) < 0 && !Input.GetButtonUp (MovementY))
 							vMoveDown = true;
-						if (Input.GetAxis ("Horizontal") > 0 && !Input.GetButtonUp ("Horizontal"))
+						if (Input.GetAxis (MovementX) > 0 && !Input.GetButtonUp (MovementX))
 							vMoveRight = true;
-						if (Input.GetAxis ("Horizontal") < 0 && !Input.GetButtonUp ("Horizontal"))
+						if (Input.GetAxis (MovementX) < 0 && !Input.GetButtonUp (MovementX))
 							vMoveLeft = true;
 					} else {
 						//shorten variables
@@ -476,7 +484,6 @@ public class Tds_Character : MonoBehaviour {
 				if (rotationChanged && CanRotateBody()) {
 					vBodyObj.transform.rotation = Quaternion.Slerp (vBodyObj.transform.rotation, newRotation, 1f);
 				}
-				vCamObj.transform.rotation = CamStartRotation;
 			}
 		}
 	}
@@ -500,7 +507,7 @@ public class Tds_Character : MonoBehaviour {
 	bool CanRotateBody()
 	{
 		bool CanRotate = true;
-		if ((!IsPlayer && !SeePlayer) || (IsPlayer && CursorIsNear))
+		if ((!IsPlayer && !SeePlayer) || (IsPlayer && CursorIsNear) || (!IsPlayer2 && !SeePlayer) || (IsPlayer2 && CursorIsNear))
 			CanRotate = false;
 
 		return CanRotate;
@@ -542,7 +549,7 @@ public class Tds_Character : MonoBehaviour {
 		ListWeapons [vCurWeapIndex].vAmmoCur = ListWeapons [vCurWeapIndex].vAmmoSize;
 
 		//refresh recharge
-		if (IsPlayer)
+		if (IsPlayer || IsPlayer2)
 			RefreshWeaponUI ();
 	}
 
@@ -573,10 +580,10 @@ public class Tds_Character : MonoBehaviour {
 		//check loot
 		vCurLoot = vLoot;
 
-		if (vLoot != null && IsPlayer) {
+		if (vLoot != null && (IsPlayer || IsPlayer2)) {
 			LootNearby = true;
 			vGameManager.vPressSpaceObj.SetActive (true);
-		} else if (IsPlayer) {
+		} else if ((IsPlayer || IsPlayer2)) {
 			LootNearby = false;
 			vGameManager.vPressSpaceObj.SetActive (false);
 		}
@@ -599,7 +606,7 @@ public class Tds_Character : MonoBehaviour {
 		IsAlive = false;
 
 		//tell the gamemanager, the player is dead. Stop everything
-		if (IsPlayer)
+		if ((IsPlayer || IsPlayer2))
 			vGameManager.SetPlayerDead ();
 
 		//check if there is a dying animation
@@ -638,7 +645,7 @@ public class Tds_Character : MonoBehaviour {
 			HP = 0;
 
 		//if main player
-		if (IsPlayer)
+		if ((IsPlayer || IsPlayer2))
 			vGameManager.RefreshPlayerHP ((float)HP / (float)MaxHP);
 
 		//check if the character died
@@ -654,7 +661,7 @@ public class Tds_Character : MonoBehaviour {
 		vGameManager = vvGameManager;
 
 		//replace the mouse cursor with this obj 
-		if (IsPlayer && vGameManager.AimObj != null) {
+		if ((IsPlayer || IsPlayer2) && vGameManager.AimObj != null) {
 			vAimIcon = vGameManager.AimObj;
 			vGameManager.vPlayerText.text = vName;
 		}
@@ -704,7 +711,7 @@ public class Tds_Character : MonoBehaviour {
 		CurWeaponObj = vNewWeapon;
 
 		//refresh all the weapon on top
-		if (IsPlayer)
+		if (IsPlayer || IsPlayer2)
 			RefreshWeaponUI ();
 	}
 
