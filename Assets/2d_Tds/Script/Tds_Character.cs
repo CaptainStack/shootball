@@ -372,12 +372,10 @@ public class Tds_Character : MonoBehaviour {
 					UsingGamepad = true;
 					rotationChanged = true;
 					LastPositiveGamepadInput = joyInput;
-					Debug.Log("Gamepad!");
 				} else if (LastMouseLocation != Input.mousePosition /* Snaps rotation to movement */) {
 					dir = vTargetPosition - pos;
 					LastMouseLocation = Input.mousePosition;
 					rotationChanged = true;
-					Debug.Log("Mouse!");
 					UsingGamepad = false;
 				} else {
 					rotationChanged = true;
