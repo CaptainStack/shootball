@@ -5,9 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class ScoreGoal : MonoBehaviour {
 	public Tds_GameManager vGameManager;
+    public int playerNumber;
+    public Transform player1;
+    public Transform player2;
+    public Transform ball;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
@@ -19,12 +23,27 @@ public class ScoreGoal : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.tag == "Ball") {
-			vGameManager.vMainPlayer.Score += 1;
-			vGameManager.ScoreText.text = vGameManager.vMainPlayer.Score.ToString();
-			if (vGameManager.vMainPlayer.Score >= 3) {
+            if (playerNumber == 1) {
+                vGameManager.vMainPlayer.Score += 1;
+                vGameManager.ScoreText.text = vGameManager.vMainPlayer.Score.ToString();
+            }
+            else {
+                vGameManager.vPlayer2.Score += 1;
+                vGameManager.ScoreTextP2.text = vGameManager.vPlayer2.Score.ToString();
+            }
+
+            other.GetComponent<BallScript>().ResetPosition();
+            vGameManager.vMainPlayer.ResetPosition();
+            vGameManager.vPlayer2.ResetPosition();
+
+            if (vGameManager.vMainPlayer.Score >= 3) {
 				Cursor.visible = true;
 				SceneManager.LoadScene ("Main");
 			}
+            else if (vGameManager.vPlayer2.Score >= 3)  {
+                Cursor.visible = true;
+                SceneManager.LoadScene("Main");
+            }
 		}
 	}
 }

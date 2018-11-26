@@ -75,8 +75,10 @@ public class Tds_Character : MonoBehaviour {
 	private bool UsingGamepad = false;
 	private Vector3 LastPositiveGamepadInput;
 
-	// Use this for initialization
-	void Start () {
+    private Vector3 startPos;
+
+    // Use this for initialization
+    void Start () {
 		LastMouseLocation = Input.mousePosition;
 		vAudioSource = GetComponent<AudioSource> ();
 
@@ -91,7 +93,9 @@ public class Tds_Character : MonoBehaviour {
 
 		//get the MaxHP
 		MaxHP = HP;
-	}
+
+        startPos = this.transform.position;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -848,4 +852,12 @@ public class Tds_Character : MonoBehaviour {
 
 		return vangle;
 	}
+
+    //Reset the player position
+    public void ResetPosition()
+    {
+        this.transform.position = startPos;
+        this.transform.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        this.transform.GetComponent<Rigidbody2D>().angularVelocity = 0f;
+    }
 }
