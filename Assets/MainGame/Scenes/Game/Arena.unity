@@ -1645,8 +1645,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vName: Player2
-  vFactionType: 0
-  HP: 5
+  vFactionType: 1
+  HP: 25
   Score: 0
   IsAlive: 1
   IsPlayer: 0
@@ -35955,9 +35955,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vGameManager: {fileID: 1810420517}
   playerNumber: 1
-  player1: {fileID: 0}
-  player2: {fileID: 0}
-  ball: {fileID: 0}
 --- !u!213 &1263626172
 Sprite:
   m_ObjectHideFlags: 0
@@ -39422,9 +39419,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vGameManager: {fileID: 1810420517}
   playerNumber: 2
-  player1: {fileID: 0}
-  player2: {fileID: 0}
-  ball: {fileID: 0}
 --- !u!213 &1397238047
 Sprite:
   m_ObjectHideFlags: 0
@@ -45787,7 +45781,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vName: Player
   vFactionType: 0
-  HP: 5
+  HP: 25
   Score: 0
   IsAlive: 1
   IsPlayer: 1

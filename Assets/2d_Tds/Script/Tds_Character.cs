@@ -8,7 +8,7 @@ public class Tds_Character : MonoBehaviour {
 
 	public enum DirectionType{Right, Left, Up, Down};
 	public enum WalkDirection{Right, Left, Up, Down, RightUp, RightDown, LeftUp, LeftDown};
-	public enum FactionType {Friendly, Hostile}
+	public enum FactionType {FriendlyP1, FriendlyP2, Hostile}
 
 	public string vName = "";
 	public FactionType vFactionType = FactionType.Hostile;

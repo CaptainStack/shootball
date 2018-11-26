@@ -6,9 +6,6 @@ using UnityEngine.SceneManagement;
 public class ScoreGoal : MonoBehaviour {
 	public Tds_GameManager vGameManager;
     public int playerNumber;
-    public Transform player1;
-    public Transform player2;
-    public Transform ball;
 
     // Use this for initialization
     void Start () {
