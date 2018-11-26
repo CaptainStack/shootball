@@ -38,7 +38,7 @@ public class ScoreGoal : MonoBehaviour {
 
             if (vGameManager.vMainPlayer.Score >= 3) {
 				Cursor.visible = true;
-				SceneManager.LoadScene ("Main");
+				SceneManager.LoadScene ("DialogueTest");
 			}
             else if (vGameManager.vPlayer2.Score >= 3)  {
                 Cursor.visible = true;
