@@ -57,8 +57,9 @@ public class Tds_GameManager : MonoBehaviour {
 	public Material vSpriteMat;
 	public Material vBlinkMat;
 
-	public Image vHpImage;
-	public Text vPlayerText;
+	public Image vPlayer1HpImage;
+    public Image vPlayer2HpImage;
+    public Text vPlayerText;
 	public Text ScoreText;
     public Text ScoreTextP2;
 
@@ -120,18 +121,29 @@ public class Tds_GameManager : MonoBehaviour {
 			SceneManager.LoadScene (vNewScene);
 	}
 
-	public void RefreshPlayerHP(float vPerc)
+    public void RefreshPlayerHP(int playerNumber, float vPerc)
 	{
+        Image tmpImg;
+
+        if(playerNumber == 1)
+        {
+            tmpImg = vPlayer1HpImage;
+        }
+        else
+        {
+            tmpImg = vPlayer2HpImage;
+        }
+
 		//show different color for HP value for player
 		if (vPerc >= 0.7f)
-			vHpImage.color = Color.green;
+			tmpImg.color = Color.green;
 		else if (vPerc >= 0.3f)
-			vHpImage.color = Color.yellow;
+			tmpImg.color = Color.yellow;
 		else
-			vHpImage.color = Color.red;
+			tmpImg.color = Color.red;
 
 		//update HP
-		vHpImage.fillAmount = vPerc;
+		tmpImg.fillAmount = vPerc;
 	}
 
 	public void SetPlayerDead()

@@ -652,9 +652,15 @@ public class Tds_Character : MonoBehaviour {
 		if (HP < 0)
 			HP = 0;
 
-		//if main player
-		if ((IsPlayer || IsPlayer2))
-			vGameManager.RefreshPlayerHP ((float)HP / (float)MaxHP);
+        //if main player
+        if (IsPlayer)
+        {
+            vGameManager.RefreshPlayerHP(1, (float)HP / (float)MaxHP);
+        }
+        else if (IsPlayer2)
+        {
+            vGameManager.RefreshPlayerHP(2, (float)HP / (float)MaxHP);
+        }
 
 		//check if the character died
 		if (HP <= 0) {
