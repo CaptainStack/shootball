@@ -30993,7 +30993,7 @@ MonoBehaviour:
   vItemList: 
   vDebrisList:
   - {fileID: 1870837845267444, guid: 404964bedc51c1841805ff4feb2f4e57, type: 2}
-  vTileType: 1
+  vTileType: 6
   vLinkedObject: {fileID: 0}
   DoorStatus: 0
   ShowParticles: 0
@@ -31020,7 +31020,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 1
+  m_LinearDrag: 0.1
   m_AngularDrag: 0.4
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -45936,8 +45936,8 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
+  m_Mass: 100
+  m_LinearDrag: 3
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}

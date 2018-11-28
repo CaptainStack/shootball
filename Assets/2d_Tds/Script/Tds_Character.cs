@@ -476,6 +476,7 @@ public class Tds_Character : MonoBehaviour {
 
 					//move the character in this direction
 					if (CanWalk)
+                        
 						transform.Translate (vDestination);
 				}
 			
@@ -600,10 +601,18 @@ public class Tds_Character : MonoBehaviour {
 	//replace the list
 	public void RefreshVariables(List<Tds_Tile> vNewList)
 	{
-		//check if there is a wall forward.
+        //check if there is a wall forward.
+        bool hasBall = false;
 		CanWalk = true;
 
-		if (vNewList.Count > 0)
+        for (int i = 0; i < vNewList.Count; i++)
+        {
+            if (vNewList[i].vTileType == Tds_Tile.cTileType.Ball)
+            {
+                hasBall = true;
+            }
+        }
+		if (vNewList.Count > 0 && !hasBall)
 			CanWalk = false;
 	}
 

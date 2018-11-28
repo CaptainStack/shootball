@@ -10,7 +10,7 @@ using AssemblyCSharp;
 
 public class Tds_Tile : MonoBehaviour {
 	
-	public enum cTileType{Ground, Wall, Above, Teleport, Destructible, Trap}; 
+	public enum cTileType{Ground, Wall, Above, Teleport, Destructible, Trap, Ball}; 
 
 	//Ground 	= Your walking on it
 	//Wall   	= Can't walk on it. Stop movement
