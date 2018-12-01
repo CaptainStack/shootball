@@ -368,14 +368,24 @@ public class Tds_Character : MonoBehaviour {
 							}
 						} else {
 								if (IsReloading == false) {
-									IsReloading = true;
+									if (vCurWeapIndex == 0) {
+										IsReloading = true;
+										//time until we have fully reloaded
+										TimeToReload = 1f;
 
-								//time until we have fully reloaded
-								TimeToReload = 1f;
+										//recharging animation // then we wait until the animation is complete and tell the character we have ammo!
+										if (vBodyAnimator != null) {
+											vBodyAnimator.SetTrigger ("Reload");
+										}
+									} else {
+										Tds_Weapons pistol = ListWeapons[0];
+										ListWeapons = new List<Tds_Weapons>(); 
+										ListWeapons.Add(pistol);
+										vCurWeapIndex = 0;
+										ChangeWeapon ();
+									}
 
-								//recharging animation // then we wait until the animation is complete and tell the character we have ammo!
-								if (vBodyAnimator != null)
-									vBodyAnimator.SetTrigger ("Reload");
+
 							}
 						}
 
