@@ -27,6 +27,8 @@ public class MenuScripts : MonoBehaviour {
 			if (SceneManager.GetActiveScene().name == "Main" && vNewScene == "Controls" ||
 				SceneManager.GetActiveScene().name == "Controls" && vNewScene == "Main") {
 				DontDestroyOnLoad(GameObject.FindGameObjectsWithTag("Music")[0]);
+			} else {
+				Destroy(GameObject.FindGameObjectsWithTag("Music")[0]);
 			}
 		}
 	}
