@@ -9,6 +9,8 @@ public class SpeedBoostSpawner : MonoBehaviour {
     private SpeedBoost spawnedBoost;
     Vector3 startPos;
 
+    public GameObject boost;
+
 	// Use this for initialization
 	void Start () {
         startPos = this.transform.position;
@@ -32,14 +34,7 @@ public class SpeedBoostSpawner : MonoBehaviour {
 
     private void SpawnSpeedBoost()
     {
-        GameObject boost;
-        boost = new GameObject("Speed Boost");
-        CircleCollider2D collider = boost.AddComponent<CircleCollider2D>();
-        collider.isTrigger = true;
-        boost.AddComponent<SpeedBoost>();
-        boost.transform.position = this.transform.position;
-
-        spawnedBoost = boost.GetComponent<SpeedBoost>();
+        Instantiate(boost, this.transform.position, Quaternion.identity);
     }
 
     public void SuppressSpawn()
