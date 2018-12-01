@@ -77,6 +77,9 @@ public class Tds_Character : MonoBehaviour {
 
     private Vector3 startPos;
 
+    private float speedBoostDuration = 0f;
+    private float speedBoostFactor = 1.75f;
+
     // Use this for initialization
     void Start () {
 		LastMouseLocation = Input.mousePosition;
@@ -471,18 +474,24 @@ public class Tds_Character : MonoBehaviour {
 					//show the animation on the right direction
 					vLegAnimator.SetFloat ("Direction", vBackForward);
 
-					//check where it's heading 
-					Vector2 vDestination = new Vector2 (0f, 1f) * WalkSpeed * Time.deltaTime;
+                    //check where it's heading 
+
+                    float moveDistance = 1.0f;
+                    if (speedBoostDuration > 0f)
+                    {
+                        moveDistance *= speedBoostFactor;
+                        speedBoostDuration -= Time.deltaTime;
+                    }
+					Vector2 vDestination = new Vector2 (0f, moveDistance) * WalkSpeed * Time.deltaTime;
 
 					//move the character in this direction
 					if (CanWalk)
-                        
 						transform.Translate (vDestination);
 				}
 			
 				Quaternion newRotation = new Quaternion();
 
-				if (rotationChanged) {
+				if (rotationChanged && dir != Vector3.zero) {
 					newRotation = Quaternion.LookRotation (dir, Vector3.back);
 					newRotation.x = 0f;
 					newRotation.y = 0f;
@@ -874,5 +883,10 @@ public class Tds_Character : MonoBehaviour {
         this.transform.position = startPos;
         this.transform.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
         this.transform.GetComponent<Rigidbody2D>().angularVelocity = 0f;
+    }
+
+    public void EnableSpeedBoost(float boostTime = 4.0f)
+    {
+        speedBoostDuration = boostTime;
     }
 }
