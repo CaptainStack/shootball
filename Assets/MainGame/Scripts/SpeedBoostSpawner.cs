@@ -34,7 +34,7 @@ public class SpeedBoostSpawner : MonoBehaviour {
 
     private void SpawnSpeedBoost()
     {
-        Instantiate(boost, this.transform.position, Quaternion.identity);
+        spawnedBoost = Instantiate(boost, this.transform.position, Quaternion.identity).GetComponent<SpeedBoost>();
     }
 
     public void SuppressSpawn()

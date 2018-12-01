@@ -83,8 +83,11 @@ public class Tds_Character : MonoBehaviour {
 	public GameObject glowingEffectPrefab;
 	private ParticleSystem playerGlowingEffect;
 
+	private Vector3 startingLocation;
+	
     // Use this for initialization
     void Start () {
+		startingLocation = this.transform.position;
 		playerGlowingEffect = Instantiate(glowingEffectPrefab, this.transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
 		playerGlowingEffect.Stop();
 		LastMouseLocation = Input.mousePosition;
@@ -638,22 +641,10 @@ public class Tds_Character : MonoBehaviour {
 	//make the character die
 	void CharacterDie()
 	{
-		//is dead right now
-		IsAlive = false;
-
-		//tell the gamemanager, the player is dead. Stop everything
-		if ((IsPlayer || IsPlayer2))
-			vGameManager.SetPlayerDead ();
-
-		//check if there is a dying animation
-		if (vGameManager.vDyingAnim != null) {
-			//create dmg text on target
-			GameObject vDieAnim = Instantiate (vGameManager.vDyingAnim);
-			vDieAnim.transform.position = transform.position;
-		}
-
-		//start to make him invisible then destroy him completly
-		StartCoroutine (vGameManager.AlphaEffect (transform));
+		this.transform.position = startingLocation;
+		this.HP = MaxHP;
+		int playerNumber = IsPlayer ? 1 : 2;
+		vGameManager.RefreshPlayerHP(playerNumber, (float)HP / (float)MaxHP);
 	}
 
 	void ShowDamage(int vDmg)
@@ -705,7 +696,7 @@ public class Tds_Character : MonoBehaviour {
 		//replace the mouse cursor with this obj 
 		if ((IsPlayer || IsPlayer2) && vGameManager.AimObj != null) {
 			vAimIcon = vGameManager.AimObj;
-			vGameManager.vPlayerText.text = vName;
+			// vGameManager.vPlayerText.text = vName;
 		}
 
 		//initialise list
@@ -895,7 +886,7 @@ public class Tds_Character : MonoBehaviour {
         this.transform.GetComponent<Rigidbody2D>().angularVelocity = 0f;
     }
 
-    public void EnableSpeedBoost(float boostTime = 5.0f)
+    public void EnableSpeedBoost(float boostTime = 8.0f)
     {
 		playerGlowingEffect.Play();
         speedBoostDuration = boostTime;
