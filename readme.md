@@ -2,7 +2,10 @@
 
 **Download to play here! [(itch.io)](https://captainstack.itch.io/american-soccer)**
 
+You will need a PC and a controller to play.
 
+
+# Development process
 Shootball is a game developed during the [2018 GitHub Game Off](https://blog.github.com/2018-11-01-game-off-2018-theme-announcement/)
 
 Here is a Google Drive folder for our brainstorming and design documents:
