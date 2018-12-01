@@ -34,6 +34,6 @@ https://drive.google.com/drive/folders/1DVbgP0zJuZDnT_E6vsXGKhwUG_3zN5dC
 * In Unity, "Open", navigate into the top-level directory of the project, and select "Open". The project should import and open
 
 # Running the starter code
-* Go to Assets > Scene and open the "Demo" scene
+* Go to shootball/Assets/MainGame/Scenes/Menus in Unity's "Project" navigator and open the "Main" scene
 * Click the Play icon at the top of Unity
 * If the game does not load correctly, try fixing it by going to File > Build Settings and change the "Target Platform" value. It shouldn't matter what you change it to, and you can change it back to its original value, there is just a bug that is fixed by changing it.
