@@ -17,7 +17,6 @@ public class MenuScripts : MonoBehaviour {
 	}
 
 	public void SwitchScene(string vNewScene) {
-		Debug.Log("hi");
 		if (vNewScene != null) {
 			SceneManager.LoadScene (vNewScene);
 		}
