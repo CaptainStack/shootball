@@ -13,7 +13,9 @@ public class MenuScripts : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (GameObject.FindGameObjectsWithTag("Music").Length > 1) {
+			Destroy(GameObject.FindGameObjectsWithTag("Music")[1]);
+		}
 	}
 
 	public void SwitchScene(string vNewScene) {
@@ -21,6 +23,10 @@ public class MenuScripts : MonoBehaviour {
 			SceneManager.LoadScene (vNewScene);
 			if (vNewScene != "Arena") {
 				Cursor.visible = true;
+			}
+			if (SceneManager.GetActiveScene().name == "Main" && vNewScene == "Controls" ||
+				SceneManager.GetActiveScene().name == "Controls" && vNewScene == "Main") {
+				DontDestroyOnLoad(GameObject.FindGameObjectsWithTag("Music")[0]);
 			}
 		}
 	}
