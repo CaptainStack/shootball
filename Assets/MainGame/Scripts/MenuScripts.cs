@@ -28,7 +28,9 @@ public class MenuScripts : MonoBehaviour {
 				SceneManager.GetActiveScene().name == "Controls" && vNewScene == "Main") {
 				DontDestroyOnLoad(GameObject.FindGameObjectsWithTag("Music")[0]);
 			} else {
-				Destroy(GameObject.FindGameObjectsWithTag("Music")[0]);
+				if (GameObject.FindGameObjectsWithTag("Music").Length > 0) {
+					Destroy(GameObject.FindGameObjectsWithTag("Music")[0]);
+				}
 			}
 		}
 	}
