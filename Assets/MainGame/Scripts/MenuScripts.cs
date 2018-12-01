@@ -19,6 +19,9 @@ public class MenuScripts : MonoBehaviour {
 	public void SwitchScene(string vNewScene) {
 		if (vNewScene != null) {
 			SceneManager.LoadScene (vNewScene);
+			if (vNewScene != "Arena") {
+				Cursor.visible = true;
+			}
 		}
 	}
 
