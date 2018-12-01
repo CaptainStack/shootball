@@ -1,4 +1,8 @@
 # Shootball
+
+**Download to play here! [(itch.io)](https://captainstack.itch.io/american-soccer)**
+
+
 Shootball is a game developed during the [2018 GitHub Game Off](https://blog.github.com/2018-11-01-game-off-2018-theme-announcement/)
 
 Here is a Google Drive folder for our brainstorming and design documents:
@@ -9,6 +13,8 @@ https://drive.google.com/drive/folders/1DVbgP0zJuZDnT_E6vsXGKhwUG_3zN5dC
 * Kelsey Breseman
 * Christopher Proteau
 * Brett SLOWland
+* Music by Travis St. Onge
+* Design by Edward Roberts
 
 # Developer setup
 * [Download Unity](https://store.unity.com/) ("Personal" use is free)
