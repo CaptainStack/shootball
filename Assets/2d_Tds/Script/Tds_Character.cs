@@ -80,8 +80,13 @@ public class Tds_Character : MonoBehaviour {
     private float speedBoostDuration = 0f;
     private float speedBoostFactor = 1.75f;
 
+	public GameObject glowingEffectPrefab;
+	private ParticleSystem playerGlowingEffect;
+
     // Use this for initialization
     void Start () {
+		playerGlowingEffect = Instantiate(glowingEffectPrefab, this.transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
+		playerGlowingEffect.Stop();
 		LastMouseLocation = Input.mousePosition;
 		vAudioSource = GetComponent<AudioSource> ();
 
@@ -102,6 +107,9 @@ public class Tds_Character : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (playerGlowingEffect) {
+			playerGlowingEffect.transform.position = this.transform.position;
+		}
 		//check if the character is ready
 		if (vGameManager != null && IsAlive) {
 
@@ -481,7 +489,9 @@ public class Tds_Character : MonoBehaviour {
                     {
                         moveDistance *= speedBoostFactor;
                         speedBoostDuration -= Time.deltaTime;
-                    }
+                    } else {
+						playerGlowingEffect.Stop();
+					}
 					Vector2 vDestination = new Vector2 (0f, moveDistance) * WalkSpeed * Time.deltaTime;
 
 					//move the character in this direction
@@ -885,8 +895,9 @@ public class Tds_Character : MonoBehaviour {
         this.transform.GetComponent<Rigidbody2D>().angularVelocity = 0f;
     }
 
-    public void EnableSpeedBoost(float boostTime = 4.0f)
+    public void EnableSpeedBoost(float boostTime = 5.0f)
     {
+		playerGlowingEffect.Play();
         speedBoostDuration = boostTime;
     }
 }
