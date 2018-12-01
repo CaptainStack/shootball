@@ -84,12 +84,12 @@ public class Tds_Projectile : MonoBehaviour {
 			}
 			if (((vTile != null && vTile.vTileType == Tds_Tile.cTileType.Wall) || other.tag == "Ball") && vRebounce <= 0) {
 				this.vCollider.isTrigger = false;
-				yield return new WaitForSeconds(0.001f);
+				yield return new WaitForSeconds(0.02f);
 				ProjDie();
 			}
 			else if((vTile != null && vTile.vTileType == Tds_Tile.cTileType.Wall) || other.tag == "Ball") {
 				this.vCollider.isTrigger = false;
-				yield return new WaitForSeconds(0.001f);
+				yield return new WaitForSeconds(0.02f);
 				CalculateRebounce(other);
 			}
 		}
