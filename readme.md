@@ -4,6 +4,7 @@
 
 You will need a PC and a controller to play.
 
+![gif of gameplay](https://i.imgur.com/ooP9AUz.gif)
 
 # Development process
 American Soccer (Shootball) is a game developed during the [2018 GitHub Game Off](https://blog.github.com/2018-11-01-game-off-2018-theme-announcement/)
