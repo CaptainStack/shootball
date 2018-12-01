@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/MainGame/Scenes/Menus/RedWin.unity
     guid: f316b78a20f3f4c86934b3407cfd1832
+  - enabled: 1
+    path: Assets/MainGame/Scenes/Menus/Controls.unity
+    guid: a73649ca0dbaa4343b3f704bc6e95af0
   m_configObjects: {}

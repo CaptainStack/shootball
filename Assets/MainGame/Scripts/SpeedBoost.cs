@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SpeedBoost : MonoBehaviour {
+    private AudioSource pickupAudio;
 
 	// Use this for initialization
 	void Start () {
+        pickupAudio = GetComponent<AudioSource> ();
 		
 	}
 	
@@ -14,12 +16,15 @@ public class SpeedBoost : MonoBehaviour {
 		
 	}
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private IEnumerator OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Special Taco");
         if (collision.tag.Equals("Character"))
         {
+            // this.gameObject.SetActive(false);
             collision.GetComponent<Tds_Character>().EnableSpeedBoost();
+            pickupAudio.Play();
+            this.transform.position = new Vector3(-999, -999, -999);
+            yield return new WaitForSeconds(1f);
             Destroy(this.gameObject);
         }
         else if (collision.tag.Equals("SpeedBoostSpawner"))
