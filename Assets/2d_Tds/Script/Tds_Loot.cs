@@ -84,6 +84,7 @@ public class Tds_Loot : MonoBehaviour {
 		if (vShow || CursorIsAbove)
 			CanShow = true;
 
+		if (vNameValue != null && vNameValue.gameObject != null) {
 		//make sure we show/hide correctly (with player above items or with cursor)
 		vNameValue.gameObject.SetActive (CanShow);
 		vPanel.gameObject.SetActive (CanShow);
@@ -97,6 +98,7 @@ public class Tds_Loot : MonoBehaviour {
 			
 		//replace old value
 		ShowItem = CanShow;
+		}
 
 	}
 
