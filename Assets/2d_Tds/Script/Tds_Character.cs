@@ -46,6 +46,7 @@ public class Tds_Character : MonoBehaviour {
 	//initialize character direction
 	private WalkDirection CurWalkDirection = WalkDirection.Down;
 	public List<Tds_Weapons> ListWeapons;
+	public List<Tds_WeaponMenu> PlayerWeaponMenu;
 	private GameObject CurWeaponObj = null;
 	private int vCurWeapIndex = 0;				//start with the 1st weapon
 	//private int vCurAmmo = 0;
@@ -176,15 +177,12 @@ public class Tds_Character : MonoBehaviour {
 					}
 
 					if (Input.GetButton(Fire)) {
-						Debug.Log(Fire);
 						IsAttacking = true;
 					}
 
 					//check if the user want to change weapon
 					if (Input.GetButtonDown (ChangeWeaponKey)) {
 						GetNextWeapon (1);
-					} else if (Input.GetButtonDown (ChangeWeaponKey)) {
-						GetNextWeapon (-1);
 					}
 
 					//reduce it's time
@@ -194,8 +192,7 @@ public class Tds_Character : MonoBehaviour {
 					}
 
 					//get the item
-					if (LootNearby && (Input.GetButtonDown (UseKey)) && vCurLoot != null) {
-						Debug.Log(UseKey);
+					if (LootNearby && vCurLoot != null) {
 
 						//check if we already have the weapon and show it
 						bool HasAlreadyWeapon = false;
@@ -390,7 +387,7 @@ public class Tds_Character : MonoBehaviour {
 						}
 
 						//refresh all the weapon on top
-						if (IsPlayer)
+						if (IsPlayer || IsPlayer2)
 							RefreshWeaponUI ();
 					}
 				}
@@ -754,22 +751,25 @@ public class Tds_Character : MonoBehaviour {
 		CurWeaponObj = vNewWeapon;
 
 		//refresh all the weapon on top
-		if (IsPlayer || IsPlayer2)
+		if (IsPlayer || IsPlayer2) {
 			RefreshWeaponUI ();
+			CanAttack = true;
+		}
 	}
 
 	//refresh all the weapon on top
 	void RefreshWeaponUI()
 	{
 		//clear everything
-		foreach (Tds_WeaponMenu vCurMenu in vGameManager.vWeaponMenuList)
+		foreach (Tds_WeaponMenu vCurMenu in PlayerWeaponMenu)
 			UpdateWeaponMenu (vCurMenu, null);
 
 		int vcpt = 0;
 		foreach (Tds_Weapons vCurWeapon in ListWeapons) {
 
 			//get the right menu 
-			Tds_WeaponMenu vCurMenu = vGameManager.vWeaponMenuList [vcpt];
+
+			Tds_WeaponMenu vCurMenu = PlayerWeaponMenu [vcpt];
 
 			//check if we are on the selected weapon
 			if (vcpt == vCurWeapIndex)

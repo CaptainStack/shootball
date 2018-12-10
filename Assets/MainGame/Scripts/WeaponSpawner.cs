@@ -1,16 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using AssemblyCSharp;
 
-public class SpeedBoostSpawner : MonoBehaviour {
-
+public class WeaponSpawner : MonoBehaviour {
     public float respawnFrequency;
+	public Tds_GameManager vGameManager;
     private float timeUntilNextSpawn;
-    private SpeedBoost spawnedBoost;
+    private GameObject spawnedWeapon;
     Vector3 startPos;
 
-    public GameObject boost;
-
+    public GameObject akPrefab;
+	public GameObject shotgunPrefab;
+	public GameObject energyPrefab;
 	// Use this for initialization
 	void Start () {
         startPos = this.transform.position;
@@ -20,7 +22,7 @@ public class SpeedBoostSpawner : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         timeUntilNextSpawn -= Time.deltaTime;
-        if (spawnedBoost != null)
+        if (spawnedWeapon != null)
         {
             timeUntilNextSpawn = respawnFrequency;
         }
@@ -28,13 +30,22 @@ public class SpeedBoostSpawner : MonoBehaviour {
         else if (timeUntilNextSpawn <= 0f)
         {
             timeUntilNextSpawn = respawnFrequency;
-            SpawnSpeedBoost();
+            SpawnWeapon();
         }
 	}
 
-    private void SpawnSpeedBoost()
+    private void SpawnWeapon()
     {
-        spawnedBoost = Instantiate(boost, this.transform.position, Quaternion.identity).GetComponent<SpeedBoost>();
+		int randomWeapon = Mathf.RoundToInt(Random.Range(0, 3));
+		GameObject weaponPrefab;
+		if (randomWeapon == 0) {
+			weaponPrefab = akPrefab;
+		} else if (randomWeapon == 1) {
+			weaponPrefab = shotgunPrefab;
+		} else {
+			weaponPrefab = energyPrefab;
+		}
+        spawnedWeapon = Instantiate(weaponPrefab, this.transform.position, Quaternion.identity);
     }
 
     public void SuppressSpawn()
