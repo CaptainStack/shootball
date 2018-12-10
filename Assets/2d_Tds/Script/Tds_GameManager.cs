@@ -11,7 +11,6 @@ public class Tds_GameManager : MonoBehaviour {
 	public List<Tds_Weapons> vWeaponList;
 	public List<Tds_Items> vItemsList;
 	public List<Tds_SoundList> vSoundList;
-	public List<Tds_WeaponMenu> vWeaponMenuList;
 	public List<Tds_Projectile> vProjectileList;
 
 	//define here the color for every kind of items
