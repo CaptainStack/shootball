@@ -39,7 +39,6 @@ public class SpeedBoostSpawner : MonoBehaviour {
 
     public void SuppressSpawn()
     {
-        Debug.Log("Suppress");
         timeUntilNextSpawn = respawnFrequency;
     }
 
