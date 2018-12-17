@@ -610,8 +610,8 @@ public class Tds_Character : MonoBehaviour
                     {
                         playerGlowingEffect.Stop();
                     }
-                    Vector2 vDestination = new Vector2(0f, moveDistance) * WalkSpeed * Time.deltaTime;
 
+                    Vector2 vDestination = new Vector2(0f, moveDistance) * WalkSpeed * Time.deltaTime;
                     //move the character in this direction
                     if (CanWalk)
                     {
@@ -826,7 +826,8 @@ public class Tds_Character : MonoBehaviour
         {
             CharacterDie();
         }
-        else {
+        else
+        {
             StartCoroutine(vGameManager.BlinkEffect(transform));
         }
     }
@@ -847,8 +848,10 @@ public class Tds_Character : MonoBehaviour
         ListWeapons = new List<Tds_Weapons>();
 
         //initialise weapons from game manager. One place to handle all the game
-        foreach (WeaponName vCurName in ListWeaponsName) {
-            foreach (Tds_Weapons vCurWeapon in vGameManager.vWeaponList) {
+        foreach (WeaponName vCurName in ListWeaponsName)
+        {
+            foreach (Tds_Weapons vCurWeapon in vGameManager.vWeaponList)
+            {
                 if (vCurName.ToString() == vCurWeapon.vWeaponName.ToString())
                 {
                     //begin with full Ammo
@@ -1011,36 +1014,28 @@ public class Tds_Character : MonoBehaviour
             case WalkDirection.Down:
                 vangle = 180f;
                 break;
-
             case WalkDirection.Right:
                 vangle = -90f;
                 break;
-
             case WalkDirection.Left:
                 vangle = 90f;
                 break;
-
             case WalkDirection.Up:
                 vangle = 0f;
                 break;
-
             case WalkDirection.LeftUp:
-            vangle = 45f;
-            break;
-
+                vangle = 45f;
+                break;
             case WalkDirection.LeftDown:
                 vangle = 135f;
                 break;
-
             case WalkDirection.RightDown:
-            vangle = -135;
-            break;
-
+                vangle = -135;
+                break;
             case WalkDirection.RightUp:
-            vangle = -45f;
-            break;
+                vangle = -45f;
+                break;
         }
-
         return vangle;
     }
 
