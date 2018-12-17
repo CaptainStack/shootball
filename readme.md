@@ -1,4 +1,4 @@
-# American Soccer (Shootball)
+# [American Soccer (Shootball)](https://captainstack.github.io/shootball/)
 
 **Download to play here! [(itch.io)](https://captainstack.itch.io/american-soccer)**
 
