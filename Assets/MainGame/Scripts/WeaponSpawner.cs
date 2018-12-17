@@ -47,7 +47,8 @@ public class WeaponSpawner : MonoBehaviour
         else if (randomWeapon == 1) 
         {
             weaponPrefab = shotgunPrefab;
-        } else 
+        }
+        else
         {
             weaponPrefab = energyPrefab;
         }
