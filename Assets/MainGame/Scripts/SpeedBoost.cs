@@ -2,19 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpeedBoost : MonoBehaviour {
+public class SpeedBoost : MonoBehaviour
+{
     private AudioSource pickupAudio;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () 
+    {
         pickupAudio = GetComponent<AudioSource> ();
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+        
+    }
+    
+    // Update is called once per frame
+    void Update () 
+    {
+        
+    }
 
     private IEnumerator OnTriggerEnter2D(Collider2D collision)
     {
