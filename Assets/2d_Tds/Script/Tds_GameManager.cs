@@ -4,124 +4,139 @@ using UnityEngine;
 using AssemblyCSharp;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
-public class Tds_GameManager : MonoBehaviour {
+public class Tds_GameManager : MonoBehaviour
+{
+    public List<Tds_Weapons> vWeaponList;
+    public List<Tds_Items> vItemsList;
+    public List<Tds_SoundList> vSoundList;
+    public List<Tds_Projectile> vProjectileList;
 
-	public List<Tds_Weapons> vWeaponList;
-	public List<Tds_Items> vItemsList;
-	public List<Tds_SoundList> vSoundList;
-	public List<Tds_Projectile> vProjectileList;
+    //define here the color for every kind of items
+    public Color vFriendlyColor = Color.green;
+    public Color vHostileColor = Color.red;
+    public Color vNeutralColor = Color.white;
+    public Color vItemColor = Color.yellow;
 
-	//define here the color for every kind of items
-	public Color vFriendlyColor = Color.green;
-	public Color vHostileColor = Color.red;
-	public Color vNeutralColor = Color.white;
-	public Color vItemColor = Color.yellow;
+    public bool ShowDamageNumber = true;                //if True, we show the damage number when doing dmg above enemy or your own player
+    public float vMeleeRange = 2f;                        //how close the NPC will come and do a melee attack? (knife, hand..)
+    public float vRangedRange = 40f;                    //how close the NPC will come dan do a ranged attack? (rifle, bazooka...)
+    public float vCursorRange = 12f;                     //how far until the rotation on the player is disable. It prevent from rotating infinitly
 
-	public bool ShowDamageNumber = true;				//if True, we show the damage number when doing dmg above enemy or your own player
-	public float vMeleeRange = 2f;						//how close the NPC will come and do a melee attack? (knife, hand..)
-	public float vRangedRange = 40f;					//how close the NPC will come dan do a ranged attack? (rifle, bazooka...)
-	public float vCursorRange = 12f; 					//how far until the rotation on the player is disable. It prevent from rotating infinitly
+    public Color vBlinkDamageColor = Color.red;            //blink the enemy with this color
+    public Color vDamageTextColor = Color.white;        //when showing the damage number, we use this color    
 
-	public Color vBlinkDamageColor = Color.red;			//blink the enemy with this color
-	public Color vDamageTextColor = Color.white;		//when showing the damage number, we use this color	
+    //icons for the loot panel
+    public Sprite vLowIcon = null;
+    public Sprite vMediumIcon = null;
+    public Sprite vHighIcon = null;
+    public Sprite vGodlyIcon = null;
 
-	//icons for the loot panel
-	public Sprite vLowIcon = null;
-	public Sprite vMediumIcon = null;
-	public Sprite vHighIcon = null;
-	public Sprite vGodlyIcon = null;
+    public GameObject AimObj = null;                    //you can put your aim obj here. it will replace the mouse cursor
+    public GameObject ReloadObj = null;                    //when reloading, we see the reloading animation as the mouse icon
+    public GameObject vDmgText = null;                    //we use this fabrik to show dmg text above characters who are damaged
+    public GameObject vDyingAnim = null;                //if exist, instantiate this new object will make the character dying
 
-	public GameObject AimObj = null;					//you can put your aim obj here. it will replace the mouse cursor
-	public GameObject ReloadObj = null;					//when reloading, we see the reloading animation as the mouse icon
-	public GameObject vDmgText = null;					//we use this fabrik to show dmg text above characters who are damaged
-	public GameObject vDyingAnim = null;				//if exist, instantiate this new object will make the character dying
+    public Tds_Character vMainPlayer = null;
+    public Tds_Character vPlayer2 = null;
 
-	public Tds_Character vMainPlayer = null;
-	public Tds_Character vPlayer2 = null;
+    public GameObject vWorldObj = null;                    //put everything in this gameobject 
+    public GameObject vCanvasUI = null;
+    public bool IsReady = false;                        //start every player/enemy at the same time
+    public GameObject vGameOverObj = null;                //when main player die, just stop the game and show the UI
+    public GameObject vPressSpaceObj = null;
+    public GameObject vItemObj = null;                    //has the item obj fabrik
+    public GameObject vItemLootedAnim = null;            //when looting, if exist will show a little text line at the bottom showing the item name and it's color
 
-	public GameObject vWorldObj = null;					//put everything in this gameobject 
-	public GameObject vCanvasUI = null;
-	public bool IsReady = false;						//start every player/enemy at the same time
-	public GameObject vGameOverObj = null;				//when main player die, just stop the game and show the UI
-	public GameObject vPressSpaceObj = null;
-	public GameObject vItemObj = null;					//has the item obj fabrik
-	public GameObject vItemLootedAnim = null;			//when looting, if exist will show a little text line at the bottom showing the item name and it's color
+    private bool PlayerIsDead = false;
+    private AudioSource vAudioSource = null;
 
-	private bool PlayerIsDead = false;
-	private AudioSource vAudioSource = null;
+    //blink effect mats
+    public Material vSpriteMat;
+    public Material vBlinkMat;
 
-	//blink effect mats
-	public Material vSpriteMat;
-	public Material vBlinkMat;
-
-	public Image vPlayer1HpImage;
+    public Image vPlayer1HpImage;
     public Image vPlayer2HpImage;
     public Text vPlayerText;
-	public Text ScoreText;
+    public Text ScoreText;
     public Text ScoreTextP2;
 
-	// Use this for initialization
-	void Start () {
-		InitialiseGame ();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		//reload this scene when the player is dead
-		if (PlayerIsDead && Input.GetMouseButton (0))
-			SceneManager.LoadScene (0);
-	}
+    // Use this for initialization
+    void Start()
+    {
+        InitialiseGame();
+    }
+    
+    // Update is called once per frame
+    void Update()
+    {
+        //reload this scene when the player is dead
+        if (PlayerIsDead && Input.GetMouseButton(0))
+        {
+            SceneManager.LoadScene(0);
+        }
+    }
 
-	void InitialiseGame()
-	{
-		//every character need a spriterenderer by default
-		vSpriteMat = GetComponent<SpriteRenderer>().material;	
-		//get back the default material
-		vBlinkMat = (Material)Resources.Load("Components/DroidSansMono", typeof(Material));		//get this material which make the sprite white
+    void InitialiseGame()
+    {
+        //every character need a spriterenderer by default
+        vSpriteMat = GetComponent<SpriteRenderer>().material;    
+        //get back the default material
+        vBlinkMat = (Material)Resources.Load("Components/DroidSansMono", typeof(Material));        //get this material which make the sprite white
 
-		//disable the gameover obj when the game start.
-		if (vGameOverObj != null)
-			vGameOverObj.SetActive (false);
+        //disable the gameover obj when the game start.
+        if (vGameOverObj != null)
+        {
+            vGameOverObj.SetActive(false);
+        }
 
-		//disable the vPressSpaceObj obj when the game start.
-		if (vPressSpaceObj != null)
-			vPressSpaceObj.SetActive (false);
+        //disable the vPressSpaceObj obj when the game start.
+        if (vPressSpaceObj != null)
+        {
+            vPressSpaceObj.SetActive(false);
+        }
 
-		vAudioSource = GetComponent<AudioSource> ();
+        vAudioSource = GetComponent<AudioSource>();
 
-		//we hide the Mouse Icon completely
-		if (AimObj != null)
-			Cursor.visible = false;
+        //we hide the Mouse Icon completely
+        if (AimObj != null)
+        {
+            Cursor.visible = false;
+        }
 
-		//initialise every character
-		foreach (Tds_Character vChar in Resources.FindObjectsOfTypeAll<Tds_Character>())
-			if (vChar.IsCharacter) {
+        //initialise every character
+        foreach (Tds_Character vChar in Resources.FindObjectsOfTypeAll<Tds_Character>())
+        {
+            if (vChar.IsCharacter) 
+            {
+                //get the main player
+                if (vChar.IsPlayer)
+                {
+                    vMainPlayer = vChar;
+                }
 
-				//get the main player
-				if (vChar.IsPlayer)
-					vMainPlayer = vChar;
+                if (vChar.IsPlayer2)
+                {
+                    vPlayer2 = vChar;
+                }
+                //initialise the character
+                vChar.InitialiseChar(this);
+            }
+        }
+        //game is ready
+        IsReady = true;
+    }
 
-				if (vChar.IsPlayer2)
-					vPlayer2 = vChar;
-
-				//initialise the character
-				vChar.InitialiseChar (this);
-			}
-		
-		//game is ready
-		IsReady = true;
-	}
-
-	public void SwitchScene(string vNewScene)
-	{
-		if (vNewScene != null)
-			SceneManager.LoadScene (vNewScene);
-	}
+    public void SwitchScene(string vNewScene)
+    {
+        if (vNewScene != null)
+        {
+            SceneManager.LoadScene(vNewScene);
+        }
+    }
 
     public void RefreshPlayerHP(int playerNumber, float vPerc)
-	{
+    {
         Image tmpImg;
 
         if(playerNumber == 1)
@@ -133,109 +148,124 @@ public class Tds_GameManager : MonoBehaviour {
             tmpImg = vPlayer2HpImage;
         }
 
-		//show different color for HP value for player
-		if (vPerc >= 0.7f)
-			tmpImg.color = Color.green;
-		else if (vPerc >= 0.3f)
-			tmpImg.color = Color.yellow;
-		else
-			tmpImg.color = Color.red;
+        //show different color for HP value for player
+        if (vPerc >= 0.7f)
+        {
+            tmpImg.color = Color.green;
+        }
+        else if (vPerc >= 0.3f)
+        {
+            tmpImg.color = Color.yellow;
+        }
+        else
+        {
+            tmpImg.color = Color.red;
+        }
 
-		//update HP
-		tmpImg.fillAmount = vPerc;
-	}
+        //update HP
+        tmpImg.fillAmount = vPerc;
+    }
 
-	public void SetPlayerDead()
-	{
-		IsReady = false;
-		//remove main camera from player to prevent it from being destroyed when dying.
-		Camera.main.transform.parent = null;
-		vGameOverObj.SetActive (true);
+    public void SetPlayerDead()
+    {
+        IsReady = false;
+        //remove main camera from player to prevent it from being destroyed when dying.
+        Camera.main.transform.parent = null;
+        vGameOverObj.SetActive(true);
 
-		//player losing music
-		PlaySound("Losing");
-		PlayerIsDead = true;
-	}
+        //player losing music
+        PlaySound("Losing");
+        PlayerIsDead = true;
+    }
 
-	//search for the selected clipname in the list and play it
-	public AudioClip GetAudioClip(string vClipName)
-	{
-		AudioClip vclip = null;
+    //search for the selected clipname in the list and play it
+    public AudioClip GetAudioClip(string vClipName)
+    {
+        AudioClip vclip = null;
 
-		foreach (Tds_SoundList vSound in vSoundList)
-			if (vSound.vName == vClipName)
-				vclip = vSound.vAudioClip;
+        foreach (Tds_SoundList vSound in vSoundList)
+        {
+            if (vSound.vName == vClipName)
+            {
+                vclip = vSound.vAudioClip;
+            }
+        }
+        return vclip;
+    }
+        
+    public void PlaySound(string vSound)
+    {
+        //get the audio clip from the game manager
+        AudioClip vClip = GetAudioClip(vSound);
 
-		return vclip;
-	}
-		
-	public void PlaySound(string vSound)
-	{
-		//get the audio clip from the game manager
-		AudioClip vClip = GetAudioClip (vSound);
+        if (vAudioSource != null && vClip != null)
+        {
+            vAudioSource.clip = vClip;
+            vAudioSource.Play();
+        }
+    }
 
-		if (vAudioSource != null && vClip != null) {
-			vAudioSource.clip = vClip;
-			vAudioSource.Play();
-		}
-	}
+    //blink effect when receiving dmg!
+    public IEnumerator BlinkEffect(Transform vTrans)
+    {
+        //get all the sprite renderer child for this character and make them blink!
+        SpriteRenderer[] vRendererList = vTrans.GetComponentsInChildren<SpriteRenderer>();
 
-	//blink effect when receiving dmg!
-	public IEnumerator BlinkEffect(Transform vTrans)
-	{
-		//get all the sprite renderer child for this character and make them blink!
-		SpriteRenderer[] vRendererList = vTrans.GetComponentsInChildren<SpriteRenderer> ();
+        //white color
+        foreach(SpriteRenderer vRenderer in vRendererList) 
+        {
+            vRenderer.material = vBlinkMat;
+            vRenderer.color = vBlinkDamageColor;
+        }
 
-		//white color
-		foreach (SpriteRenderer vRenderer in vRendererList) {
-			vRenderer.material = vBlinkMat;
-			vRenderer.color = vBlinkDamageColor;
-		}
+        //wait
+        yield return new WaitForSeconds(0.02f);
 
-		//wait
-		yield return new WaitForSeconds (0.02f);
+        //normal color
+        foreach (SpriteRenderer vRenderer in vRendererList)
+        {
+            vRenderer.material = vSpriteMat;
+            vRenderer.color = Color.white;
+        }
 
-		//normal color
-		foreach (SpriteRenderer vRenderer in vRendererList) {
-			vRenderer.material = vSpriteMat;
-			vRenderer.color = Color.white;
-		}
-
-		//get back to original color
-		yield return new WaitForSeconds (0.2f);
-	}
-
-
-	//blink effect when receiving dmg!
-	public IEnumerator AlphaEffect(Transform vTrans)
-	{
-		//get all the sprite renderer child for this character and make them blink!
-		SpriteRenderer[] vRendererList = vTrans.GetComponentsInChildren<SpriteRenderer> ();
-
-		//go back to original mats to make it dissapear correctly
-		foreach (SpriteRenderer vRenderer in vRendererList) {
-			vRenderer.material = vSpriteMat;
-			vRenderer.color = Color.white;
-		}
-
-		//go from 1f to 0f
-		float vcpt = 1f;
-
-		while (vcpt > 0f) {
-			Color vNewColor = new Color (1f, 1f, 1f, (float)vcpt);
-			//white color
-			foreach (SpriteRenderer vRenderer in vRendererList)
-				vRenderer.color = vNewColor;
-
-			//wait
-			yield return new WaitForSeconds (0.005f);
-
-			//decrease counter
-			vcpt -= 0.01f;
-		}
+        //get back to original color
+        yield return new WaitForSeconds(0.2f);
+    }
 
 
-		//destroy itself
-		GameObject.Destroy (vTrans.gameObject);
-	}
+    //blink effect when receiving dmg!
+    public IEnumerator AlphaEffect(Transform vTrans)
+    {
+        //get all the sprite renderer child for this character and make them blink!
+        SpriteRenderer[] vRendererList = vTrans.GetComponentsInChildren<SpriteRenderer>();
+
+        //go back to original mats to make it dissapear correctly
+        foreach (SpriteRenderer vRenderer in vRendererList)
+        {
+            vRenderer.material = vSpriteMat;
+            vRenderer.color = Color.white;
+        }
+
+        //go from 1f to 0f
+        float vcpt = 1f;
+
+        while (vcpt > 0f)
+        {
+            Color vNewColor = new Color(1f, 1f, 1f, (float)vcpt);
+            //white color
+            foreach (SpriteRenderer vRenderer in vRendererList)
+            {
+                vRenderer.color = vNewColor;
+            }
+
+            //wait
+            yield return new WaitForSeconds(0.005f);
+
+            //decrease counter
+            vcpt -= 0.01f;
+        }
+
+        //destroy itself
+        GameObject.Destroy(vTrans.gameObject);
+    }
 }

@@ -266,23 +266,23 @@ public class Tds_GridEditor : Editor {
 		//animation speed
 		if (grid.tilePrefab != null)
 		if (grid.tilePrefab.vAnimationList.Count > 0)
-			grid.AnimationSpeed = EditorGUILayout.FloatField("Animation Speed", grid.AnimationSpeed); 
+			grid.AnimationSpeed = EditorGUILayout.FloatField("Animation Speed", grid.AnimationSpeed);
 
 		//cannot be less than 0.2f for animation
 		if (grid.AnimationSpeed == 0)
 			grid.AnimationSpeed = 0.05f; 
 
 		//layer order
-		var newLayerOrder = EditorGUILayout.IntField("Layer Order", grid.OrderLayer); 
+		var newLayerOrder = EditorGUILayout.IntField("Layer Order", grid.OrderLayer);
 		if (newLayerOrder < 0)
 			newLayerOrder = 0;
 		grid.OrderLayer =  newLayerOrder;
 		
 		//Tds_Tiles
-		var newTds_Tile = EditorGUILayout.EnumPopup("Tile Spec", grid.vTileType); 
+		var newTds_Tile = EditorGUILayout.EnumPopup("Tile Spec", grid.vTileType);
 
 		//show particle
-		grid.ShowParticle = EditorGUILayout.Toggle("Show Particle (Teleport)", grid.ShowParticle); 
+		grid.ShowParticle = EditorGUILayout.Toggle("Show Particle (Teleport)", grid.ShowParticle);
 
 		//if Teleport change the default Prefab to apply. Can only apply a teleport field with the teleport prefab
 		if ((Tds_Tile.cTileType)newTds_Tile == Tds_Tile.cTileType.Teleport) {
@@ -506,7 +506,7 @@ public class Tds_GridEditor : Editor {
 	{
 		//grid.width = createSlider ("Width", grid.width);
 		//grid.height = createSlider ("Height", grid.height);
-		grid.dimension = EditorGUILayout.IntField("Pixel Dimension", grid.dimension); ;
+		grid.dimension = EditorGUILayout.IntField("Pixel Dimension", grid.dimension);
 		grid.width = 4f;//Mathf.Sqrt (grid.dimension);
 		grid.height = 4f;//Mathf.Sqrt (grid.dimension);
 
@@ -532,7 +532,7 @@ public class Tds_GridEditor : Editor {
 		if (Directory.Exists(vpath))
 		{
 			grid.tileSet.TileSetPath = vpath;
-			int cpt = 0;
+			// int cpt = 0;
 			string[] allfiles = System.IO.Directory.GetFiles(vpath, "*.png", System.IO.SearchOption.AllDirectories);
 			foreach (string vFilePath in allfiles)
 			{
@@ -1265,7 +1265,7 @@ public class Tds_GridEditor : Editor {
 						GameObject.DestroyImmediate (vTileToDestroy);
 			} 
 		}//allow right mouse
-		else if (e.type == EventType.MouseUp && vLastEventType != null && e.button == 0) {
+		else if (e.type == EventType.MouseUp && e.button == 0) {
 			GUIUtility.hotControl = 0;
 			vLastEventType = EventType.Ignore; //use ignore EventType to skip it
 		}

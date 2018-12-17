@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpeedBoostSpawner : MonoBehaviour {
-
+public class SpeedBoostSpawner : MonoBehaviour
+{
     public float respawnFrequency;
     private float timeUntilNextSpawn;
     private SpeedBoost spawnedBoost;
@@ -11,26 +11,27 @@ public class SpeedBoostSpawner : MonoBehaviour {
 
     public GameObject boost;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start ()
+    {
         startPos = this.transform.position;
         timeUntilNextSpawn = respawnFrequency;
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
+    
+    // Update is called once per frame
+    void Update ()
+    {
         timeUntilNextSpawn -= Time.deltaTime;
         if (spawnedBoost != null)
         {
             timeUntilNextSpawn = respawnFrequency;
         }
-
         else if (timeUntilNextSpawn <= 0f)
         {
             timeUntilNextSpawn = respawnFrequency;
             SpawnSpeedBoost();
         }
-	}
+    }
 
     private void SpawnSpeedBoost()
     {
