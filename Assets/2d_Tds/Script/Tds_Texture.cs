@@ -20,4 +20,3 @@ namespace AssemblyCSharp
         public List<Tds_Texture> vPixelTextureList = new List<Tds_Texture>();
     }
 }
-
