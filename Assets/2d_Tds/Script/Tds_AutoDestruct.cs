@@ -6,13 +6,13 @@ public class Tds_AutoDestruct : MonoBehaviour
     ParticleSystem vPS;
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
         vPS = GetComponent<ParticleSystem>();
     }
     
     // Update is called once per frame
-    void Update ()
+    void Update()
     {
         if (vPS && !vPS.IsAlive())
         {
