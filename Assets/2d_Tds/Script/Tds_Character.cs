@@ -122,10 +122,8 @@ public class Tds_Character : MonoBehaviour
         //check if the character is ready
         if (vGameManager != null && IsAlive)
         {
-
             if (vGameManager.IsReady)
             {
-
                 //get it's weapon ONLY when the game start
                 if (!GameStarted)
                 {
@@ -151,7 +149,6 @@ public class Tds_Character : MonoBehaviour
 
                 if (IsPlayer || IsPlayer2)
                 {
-
                     //player get mouse position instead of its' own position
                     if (IsPlayer)
                     {
@@ -179,13 +176,14 @@ public class Tds_Character : MonoBehaviour
                     else {
                         IsWalking = false;
                     }
+
                     //check if we changed walking status
                     if (IsWalking != LastWalkingStatus)
                     {
                         LastWalkingStatus = IsWalking;
                         vLegAnimator.SetBool("IsWalking", IsWalking);
                     }
-                    
+
                     if (vAimIcon != null && vCurrentIcon == null)
                     {
                         vCurrentIcon = Instantiate(vAimIcon);
@@ -220,7 +218,6 @@ public class Tds_Character : MonoBehaviour
                     //get the item
                     if (LootNearby && vCurLoot != null)
                     {
-
                         //check if we already have the weapon and show it
                         bool HasAlreadyWeapon = false;
 
@@ -320,7 +317,6 @@ public class Tds_Character : MonoBehaviour
                     ///////////////AI////////////////
                     if ((vDistance <= 20f || IsAggro) && vDistance >= vGameManager.vMeleeRange)
                     {
-                                
                         IsWalking = true;
                         IsChasing = true;
                         SeePlayer = true;
@@ -352,7 +348,6 @@ public class Tds_Character : MonoBehaviour
                     //Melee (don't use any ammo)
                     if (ListWeapons [vCurWeapIndex].vWeaponType == WeaponType.Melee && CanMelee)
                     {
-
                         //get the amount of time to wait until we can shoot again
                         ListWeapons [vCurWeapIndex].vTimeWaited = ListWeapons [vCurWeapIndex].vTimeBtwShot;
 
@@ -676,17 +671,6 @@ public class Tds_Character : MonoBehaviour
         }
     }
 
-    /*float CalculateRange(float fvalue, float svalue)
-    {
-        float vCalValue = fvalue - svalue;
-        if (vCalValue < 0)
-            vCalValue *= -1;
-
-        return vCalValue;
-    }*/
-
-
-
     //character has new ammo!
     public void RechargeWeapon()
     {
@@ -709,13 +693,6 @@ public class Tds_Character : MonoBehaviour
         {
             RefreshWeaponUI();
         }
-    }
-
-    //character can now shoot again
-    public void FinishShooting()
-    {
-        //reload is complete
-        //IsShooting = false;
     }
 
     void PlayAudio(AudioClip vClip)
@@ -768,6 +745,7 @@ public class Tds_Character : MonoBehaviour
                 hasBall = true;
             }
         }
+
         if (vNewList.Count > 0 && !hasBall)
         {
             CanWalk = false;
@@ -916,7 +894,7 @@ public class Tds_Character : MonoBehaviour
         foreach (Tds_Weapons vCurWeapon in ListWeapons)
         {
             //get the right menu
-            Tds_WeaponMenu vCurMenu = PlayerWeaponMenu [vcpt];
+            Tds_WeaponMenu vCurMenu = PlayerWeaponMenu[vcpt];
 
             //check if we are on the selected weapon
             if (vcpt == vCurWeapIndex)
@@ -930,7 +908,7 @@ public class Tds_Character : MonoBehaviour
 
             //update the menu
             UpdateWeaponMenu(vCurMenu, vCurWeapon);
-        
+
             //increase counter
             vcpt++;
         }

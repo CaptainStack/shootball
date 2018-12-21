@@ -21,11 +21,6 @@ public class Tds_HandAnimation : MonoBehaviour
         vCurCharacter.RechargeWeapon();
     }
 
-    public void FinishShooting()
-    {
-        vCurCharacter.FinishShooting();
-    }
-
     public void PlaySound(string vSound)
     {
         //get the audio clip from the game manager
