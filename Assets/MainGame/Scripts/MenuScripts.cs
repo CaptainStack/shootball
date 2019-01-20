@@ -19,6 +19,10 @@ public class MenuScripts : MonoBehaviour
         {
             Destroy(GameObject.FindGameObjectsWithTag("Music")[1]);
         }
+        if (SceneManager.GetActiveScene().name != "Main" && Input.GetButton("Cancel"))
+        {
+            SceneManager.LoadScene ("Main");
+        }
     }
 
     public void SwitchScene(string vNewScene)
